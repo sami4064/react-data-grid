@@ -23,6 +23,7 @@ import { isFunction } from 'common/utils';
 import * as columnUtils from '../ColumnUtils';
 import * as keyCodes from '../KeyCodes';
 import { CellNavigationMode, EventTypes } from 'common/constants';
+import { InteractionMasksContext } from '../Context';
 
 require('../../../../themes/interaction-masks.css');
 
@@ -74,6 +75,8 @@ class InteractionMasks extends React.Component {
     getSelectedRowTop: PropTypes.func.isRequired,
     getSelectedRowColumns: PropTypes.func.isRequired
   };
+
+  static contextType = InteractionMasksContext;
 
   state = {
     selectedPosition: {
@@ -165,6 +168,12 @@ class InteractionMasks extends React.Component {
         isEditorEnabled: true,
         firstEditorKeyPress: key
       });
+      console.log(this.context);
+      /*
+      this.context.interactionMasksCallback({
+        editing: true,
+      });
+      */
     }
   };
 
@@ -173,6 +182,12 @@ class InteractionMasks extends React.Component {
       isEditorEnabled: false,
       firstEditorKeyPress: null
     });
+    console.log(this.context);
+    /*
+    this.context.interactionMasksCallback({
+      editing: false,
+    });
+    */
   };
 
   onPressKeyWithCtrl = ({ keyCode }) => {
