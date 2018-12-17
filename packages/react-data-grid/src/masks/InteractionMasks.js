@@ -76,6 +76,8 @@ class InteractionMasks extends React.Component {
     getSelectedRowColumns: PropTypes.func.isRequired
   };
 
+  // Only as of React 16.6 :(
+  // Use <Context.Consumer> instead for now?
   static contextType = InteractionMasksContext;
 
   state = {
