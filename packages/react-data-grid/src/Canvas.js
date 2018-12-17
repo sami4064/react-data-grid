@@ -6,6 +6,7 @@ import cellMetaDataShape from 'common/prop-shapes/CellActionShape';
 import * as rowUtils from './RowUtils';
 import RowGroup from './RowGroup';
 import { InteractionMasks } from './masks';
+import { InteractionMasksContext } from './Context';
 import { getColumnScrollPosition } from './utils/canvasUtils';
 import { isFunction } from 'common/utils';
 import { EventTypes } from 'common/constants';
@@ -381,45 +382,50 @@ class Canvas extends React.PureComponent {
         style={style}
         onScroll={this.onScroll}
         className="react-grid-Canvas">
-        <InteractionMasks
-          rowGetter={rowGetter}
-          rowsCount={rowsCount}
-          width={this.props.totalWidth}
-          height={height}
-          rowHeight={rowHeight}
-          columns={columns}
-          rowOverscanStartIdx={this.props.rowOverscanStartIdx}
-          rowVisibleStartIdx={this.props.rowVisibleStartIdx}
-          rowVisibleEndIdx={this.props.rowVisibleEndIdx}
-          colVisibleStartIdx={colVisibleStartIdx}
-          colVisibleEndIdx={colVisibleEndIdx}
-          enableCellSelect={this.props.enableCellSelect}
-          enableCellAutoFocus={this.props.enableCellAutoFocus}
-          cellNavigationMode={this.props.cellNavigationMode}
-          eventBus={this.props.eventBus}
-          contextMenu={this.props.contextMenu}
-          onHitBottomBoundary={this.onHitBottomCanvas}
-          onHitTopBoundary={this.onHitTopCanvas}
-          onHitLeftBoundary={this.onHitLeftCanvas}
-          onHitRightBoundary={this.onHitRightCanvas}
-          onCommit={this.props.onCommit}
-          onCheckCellIsEditable={this.props.onCheckCellIsEditable}
-          onCellCopyPaste={this.props.onCellCopyPaste}
-          onGridRowsUpdated={this.props.onGridRowsUpdated}
-          onDragHandleDoubleClick={this.props.onDragHandleDoubleClick}
-          onCellSelected={this.props.onCellSelected}
-          onCellDeSelected={this.props.onCellDeSelected}
-          onCellRangeSelectionStarted={this.props.onCellRangeSelectionStarted}
-          onCellRangeSelectionUpdated={this.props.onCellRangeSelectionUpdated}
-          onCellRangeSelectionCompleted={this.props.onCellRangeSelectionCompleted}
-          scrollLeft={this._scroll.scrollLeft}
-          scrollTop={this._scroll.scrollTop}
-          prevScrollLeft={this.props.prevScrollLeft}
-          prevScrollTop={this.props.prevScrollTop}
-          getSelectedRowHeight={this.getSelectedRowHeight}
-          getSelectedRowTop={this.getSelectedRowTop}
-          getSelectedRowColumns={this.getSelectedRowColumns}
-        />
+        <InteractionMasksContext.Consumer>
+        { value =>
+          <InteractionMasks
+            rowGetter={rowGetter}
+            rowsCount={rowsCount}
+            width={this.props.totalWidth}
+            height={height}
+            rowHeight={rowHeight}
+            columns={columns}
+            rowOverscanStartIdx={this.props.rowOverscanStartIdx}
+            rowVisibleStartIdx={this.props.rowVisibleStartIdx}
+            rowVisibleEndIdx={this.props.rowVisibleEndIdx}
+            colVisibleStartIdx={colVisibleStartIdx}
+            colVisibleEndIdx={colVisibleEndIdx}
+            enableCellSelect={this.props.enableCellSelect}
+            enableCellAutoFocus={this.props.enableCellAutoFocus}
+            cellNavigationMode={this.props.cellNavigationMode}
+            eventBus={this.props.eventBus}
+            contextMenu={this.props.contextMenu}
+            onHitBottomBoundary={this.onHitBottomCanvas}
+            onHitTopBoundary={this.onHitTopCanvas}
+            onHitLeftBoundary={this.onHitLeftCanvas}
+            onHitRightBoundary={this.onHitRightCanvas}
+            onCommit={this.props.onCommit}
+            onCheckCellIsEditable={this.props.onCheckCellIsEditable}
+            onCellCopyPaste={this.props.onCellCopyPaste}
+            onGridRowsUpdated={this.props.onGridRowsUpdated}
+            onDragHandleDoubleClick={this.props.onDragHandleDoubleClick}
+            onCellSelected={this.props.onCellSelected}
+            onCellDeSelected={this.props.onCellDeSelected}
+            onCellRangeSelectionStarted={this.props.onCellRangeSelectionStarted}
+            onCellRangeSelectionUpdated={this.props.onCellRangeSelectionUpdated}
+            onCellRangeSelectionCompleted={this.props.onCellRangeSelectionCompleted}
+            scrollLeft={this._scroll.scrollLeft}
+            scrollTop={this._scroll.scrollTop}
+            prevScrollLeft={this.props.prevScrollLeft}
+            prevScrollTop={this.props.prevScrollTop}
+            getSelectedRowHeight={this.getSelectedRowHeight}
+            getSelectedRowTop={this.getSelectedRowTop}
+            getSelectedRowColumns={this.getSelectedRowColumns}
+            interactionCallback={value.interactionMasksCallback}
+          />
+        }
+        </InteractionMasksContext.Consumer>
         <RowsContainer id={contextMenu ? contextMenu.props.id : 'rowsContainer'}>
           <div style={{ width: totalColumnWidth }}>{rows}</div>
         </RowsContainer>

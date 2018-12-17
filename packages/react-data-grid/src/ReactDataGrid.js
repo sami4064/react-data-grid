@@ -696,7 +696,6 @@ class ReactDataGrid extends React.Component {
     if (typeof gridWidth === 'undefined' || isNaN(gridWidth) || gridWidth === 0) {
       gridWidth = '100%';
     }
-    //console.log(this.state.interactionContext);
     return (
       <div className="react-grid-Container" style={{width: containerWidth}}
         ref={this.setGridRef}>

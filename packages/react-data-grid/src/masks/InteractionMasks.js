@@ -76,10 +76,6 @@ class InteractionMasks extends React.Component {
     getSelectedRowColumns: PropTypes.func.isRequired
   };
 
-  // Only as of React 16.6 :(
-  // Use <Context.Consumer> instead for now?
-  static contextType = InteractionMasksContext;
-
   state = {
     selectedPosition: {
       idx: -1,
@@ -170,7 +166,7 @@ class InteractionMasks extends React.Component {
         isEditorEnabled: true,
         firstEditorKeyPress: key
       });
-      console.log(this.context);
+      console.log(this.props.interactionCallback());
       /*
       this.context.interactionMasksCallback({
         editing: true,
@@ -184,7 +180,7 @@ class InteractionMasks extends React.Component {
       isEditorEnabled: false,
       firstEditorKeyPress: null
     });
-    console.log(this.context);
+    console.log(this.props.interactionCallback());
     /*
     this.context.interactionMasksCallback({
       editing: false,
