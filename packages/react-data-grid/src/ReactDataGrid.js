@@ -126,7 +126,7 @@ class ReactDataGrid extends React.Component {
     },
     enableCellAutoFocus: true,
     onBeforeEdit: () => {},
-    interactionMasksCallback: () => { console.log("null interactionMasksCallback"); },
+    interactionMasksCallback: () => {},
     minColumnWidth: 80,
     columnEquality: ColumnMetrics.sameColumn
   };

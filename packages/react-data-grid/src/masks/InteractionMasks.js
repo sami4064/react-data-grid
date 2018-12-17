@@ -166,12 +166,9 @@ class InteractionMasks extends React.Component {
         isEditorEnabled: true,
         firstEditorKeyPress: key
       });
-      console.log(this.props.interactionCallback());
-      /*
-      this.context.interactionMasksCallback({
+      this.props.interactionCallback({
         editing: true,
       });
-      */
     }
   };
 
@@ -180,12 +177,9 @@ class InteractionMasks extends React.Component {
       isEditorEnabled: false,
       firstEditorKeyPress: null
     });
-    console.log(this.props.interactionCallback());
-    /*
-    this.context.interactionMasksCallback({
+    this.props.interactionCallback({
       editing: false,
     });
-    */
   };
 
   onPressKeyWithCtrl = ({ keyCode }) => {
