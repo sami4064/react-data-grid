@@ -127,6 +127,10 @@ class InteractionMasks extends React.Component {
     this.unsubscribeSelectEnd = eventBus.subscribe(EventTypes.SELECT_END, this.onSelectCellRangeEnded);
     this.unsubscribeDragEnter = eventBus.subscribe(EventTypes.DRAG_ENTER, this.handleDragEnter);
 
+    this.props.interactionCallback({
+      selectCell: (i, j) => this.selectCell({ rowIdx: i, idx: j })
+    });
+
     if (enableCellAutoFocus && this.isFocusedOnBody()) {
       this.selectFirstCell();
     }
@@ -430,6 +434,9 @@ class InteractionMasks extends React.Component {
     this.setState(prevState => {
       const next = { ...prevState.selectedPosition, ...cell };
       if (this.isCellWithinBounds(next)) {
+        this.props.interactionCallback({
+          selectedCell: next
+        });
         return {
           selectedPosition: next,
           prevSelectedPosition: cell,
