@@ -10,6 +10,8 @@ const ResizeHandle   = require('./ResizeHandle');
 require('../../../themes/react-data-grid-header.css');
 
 function SimpleCellRenderer(objArgs) {
+  console.log("rowType");
+  console.log(objArgs);
   let headerText = objArgs.column.rowType === 'header' ? objArgs.column.name : '';
   return <div className="widget-HeaderCell__value">{headerText}</div>;
 }

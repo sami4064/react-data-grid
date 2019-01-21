@@ -66,6 +66,8 @@ class HeaderRow extends React.Component {
 
     if (column.sortable && column.rowType !== HeaderRowType.FILTER) return HeaderCellType.SORTABLE;
 
+    if(this.props.rowType === HeaderRowType.SUPER) return HeaderCellType.SUPER;
+
     return HeaderCellType.NONE;
   };
 
@@ -83,6 +85,10 @@ class HeaderRow extends React.Component {
     return <SortableHeaderCell columnKey={column.key} onSort={this.props.onSort} sortDirection={sortDirection} sortDescendingFirst={sortDescendingFirst} headerRenderer={column.headerRenderer} />;
   };
 
+  getSuperHeaderCell = (column) => {
+    return <div>{column.name}</div>
+  };
+
   getHeaderRenderer = (column) => {
     if (column.headerRenderer && !column.sortable && !this.props.filterable) {
       return column.headerRenderer;
@@ -93,6 +99,8 @@ class HeaderRow extends React.Component {
       return this.getSortableHeaderCell(column);
     case HeaderCellType.FILTERABLE:
       return this.getFilterableHeaderCell(column);
+    case HeaderCellType.SUPER:
+      return this.getSuperHeaderCell(column);
     default:
       return undefined;
     }

@@ -93,6 +93,7 @@ class Header extends React.Component {
     return this.props.headerRows.map((row, index) => {
       // To allow header filters to be visible
       const isFilterRow = row.rowType === HeaderRowType.FILTER;
+      const isSuperHeader = row.rowType === HeaderRowType.SUPER;
       const rowHeight = isFilterRow ? '500px' : 'auto';
       const scrollbarSize = getScrollbarSize() > 0 ? getScrollbarSize() : 0;
       const updatedWidth = isNaN(this.props.totalWidth - scrollbarSize) ? this.props.totalWidth : this.props.totalWidth - scrollbarSize;
@@ -115,7 +116,7 @@ class Header extends React.Component {
           onColumnResizeEnd={this.onColumnResizeEnd}
           width={columnMetrics.width}
           height={row.height || this.props.height}
-          columns={columnMetrics.columns}
+          columns={isSuperHeader? row.columns : columnMetrics.columns}
           resizing={resizeColumn}
           draggableHeaderCell={this.props.draggableHeaderCell}
           filterable={row.filterable}
