@@ -89,11 +89,31 @@ class Header extends React.Component {
   getHeaderRows = () => {
     const columnMetrics = this.getColumnMetrics();
     const resizeColumn = this.state.resizing ? this.state.resizing.column : undefined;
+    let superColumns = [];
 
     return this.props.headerRows.map((row, index) => {
       // To allow header filters to be visible
       const isFilterRow = row.rowType === HeaderRowType.FILTER;
       const isSuperHeader = row.rowType === HeaderRowType.SUPER;
+      if(isSuperHeader) {
+        superColumns = row.columns;
+        let superColIdx = 0;
+        let left=0;
+        let width=0;
+        let i=1;
+        for(let cm of columnMetrics.columns) {
+          width += cm.width;
+          if(i === superColumns[superColIdx].span) {
+            superColumns[superColIdx].left=left;
+            superColumns[superColIdx].width=width;
+            left+=width;
+            width=0;
+            superColIdx++;
+            i=0;
+          }
+          i++;
+        }
+      }
       const rowHeight = isFilterRow ? '500px' : 'auto';
       const scrollbarSize = getScrollbarSize() > 0 ? getScrollbarSize() : 0;
       const updatedWidth = isNaN(this.props.totalWidth - scrollbarSize) ? this.props.totalWidth : this.props.totalWidth - scrollbarSize;
@@ -116,7 +136,7 @@ class Header extends React.Component {
           onColumnResizeEnd={this.onColumnResizeEnd}
           width={columnMetrics.width}
           height={row.height || this.props.height}
-          columns={isSuperHeader? row.columns : columnMetrics.columns}
+          columns={isSuperHeader? superColumns : columnMetrics.columns}
           resizing={resizeColumn}
           draggableHeaderCell={this.props.draggableHeaderCell}
           filterable={row.filterable}
