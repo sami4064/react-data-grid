@@ -20,6 +20,29 @@ When cell navigation occurs, it's called with:
 }}
 ```
 
+# Super Header branch
+
+This adds a `superHeaders` prop to `ReactDataGrid`.  Specifying with something like:
+
+```
+<ReactDataGrid
+  ...
+  superHeaders={[
+    {
+      key: 'unique',
+      span: 3,
+    },
+    {
+      key: 'extraUnique',
+      name: 'A Title',
+      span: 2,
+    }
+  ]}
+/>
+```
+
+will add a "super header" row above normal row headers, spanning columns as specified.
+
 # React Data Grid 
 [![Build status](https://ci.appveyor.com/api/projects/status/smciktvlkvp6r8w7/branch/master?svg=true)](https://ci.appveyor.com/project/adazzle/react-data-grid/branch/master)[![Coverage Status](https://coveralls.io/repos/adazzle/react-data-grid/badge.svg?branch=master)](https://coveralls.io/r/adazzle/react-data-grid?branch=master) [![npm version](https://badge.fury.io/js/react-data-grid.svg)](http://badge.fury.io/js/react-data-grid) 
 ![npm dependencies](https://david-dm.org/adazzle/react-data-grid.svg)
