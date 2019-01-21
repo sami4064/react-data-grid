@@ -86,7 +86,8 @@ class HeaderRow extends React.Component {
   };
 
   getSuperHeaderCell = (column) => {
-    return <div class="rdg-super-header-cell">{column.name}</div>
+    const classSuffix = column.name ? "" : "-empty";
+    return <div class={`rdg-super-header-cell${classSuffix}`}>{column.name}</div>
   };
 
   getHeaderRenderer = (column) => {
