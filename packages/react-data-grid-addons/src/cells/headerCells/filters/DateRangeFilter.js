@@ -13,6 +13,16 @@ class DateRangeFilter extends React.Component {
     };
   }
 
+  componentDidUpdate(oldP, oldS) {
+    if(this.props.filterTerm && this.props.filterTerm !== oldS.value) {
+      const value = this.props.filterTerm;
+      this.props.onChange({filterTerm: this.filterStringToDates(value), column: this.props.column, rawValue: value, filterValues: this.filterValues });
+      this.setState({
+        value
+      });
+    }
+  }
+
   componentDidMount() {
     const value = this.state.value;
     this.props.onChange({filterTerm: this.filterStringToDates(value), column: this.props.column, rawValue: value, filterValues: this.filterValues });
