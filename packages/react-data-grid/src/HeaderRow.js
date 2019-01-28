@@ -76,7 +76,7 @@ class HeaderRow extends React.Component {
     if (column.filterRenderer !== undefined) {
       FilterRenderer = column.filterRenderer;
     }
-    return <FilterRenderer {...this.props} onChange={this.props.onFilterChange} />;
+    return <FilterRenderer filterTerm={column.filterTerm} {...this.props} onChange={this.props.onFilterChange} />;
   };
 
   getSortableHeaderCell = (column) => {

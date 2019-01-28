@@ -8,6 +8,14 @@ class DateRangeFilter extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.state = {
+      value: this.props.filterTerm || ''
+    };
+  }
+
+  componentDidMount() {
+    const value = this.state.value;
+    this.props.onChange({filterTerm: this.filterStringToDates(value), column: this.props.column, rawValue: value, filterValues: this.filterValues });
   }
 
   filterStringToDates = s => {
@@ -51,8 +59,10 @@ class DateRangeFilter extends React.Component {
   }
 
   handleChange(e) {
-    let value = e.target.value;
+    e.preventDefault();
+    const value = e.target.value;
     this.props.onChange({filterTerm: this.filterStringToDates(value), column: this.props.column, rawValue: value, filterValues: this.filterValues });
+    this.setState({ value });
   }
 
   render() {
@@ -68,7 +78,7 @@ class DateRangeFilter extends React.Component {
     return (
       <div>
         <div style={columnStyle}>
-          <input key={inputKey} type="text" placeholder="e.g. 1970-01-01:" className="form-control input-sm" onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+          <input key={inputKey} type="text" placeholder="e.g. 1970-01-01:" className="form-control input-sm" onChange={this.handleChange} onKeyPress={this.handleKeyPress} value={this.state.value} />
         </div>
       </div>
     );
