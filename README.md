@@ -1,6 +1,19 @@
-# React Data Grid interaction callback fork
+# Date Range Filter
 
-Adds `interactionMasksCallback` prop to `ReactDataGrid` component.
+Added `DateRangeFilter` to `react-data-grid-addons/Filters`.
+
+This filters date ranges separated by a colon.  i.e.
+
+```
+2019-01-01:
+:2019-12-31
+2019-01-01:2019-12-31
+```
+will filter everything 2019 onwards, everything before 2020, everything in 2019 respectively.
+
+# React Data Grid interaction callback
+
+Added `interactionMasksCallback` prop to `ReactDataGrid` component.
 
 When `ReactDataGrid` mounts, the callback is called with:
 ```
@@ -20,9 +33,9 @@ When cell navigation occurs, it's called with:
 }}
 ```
 
-# Super Header branch
+# Super Headers
 
-This adds a `superHeaders` prop to `ReactDataGrid`.  Specifying with something like:
+Added a `superHeaders` prop to `ReactDataGrid`.  Specifying with something like:
 
 ```
 <ReactDataGrid
