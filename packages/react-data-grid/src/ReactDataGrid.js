@@ -328,6 +328,12 @@ class ReactDataGrid extends React.Component {
     this.openCellEditor(rowIdx, idx);
   };
 
+  openFilters = () => {
+    this.setState({
+        canFilter: true,
+    });
+  }
+
   onToggleFilter = () => {
     // setState() does not immediately mutate this.state but creates a pending state transition.
     // Therefore if you want to do something after the state change occurs, pass it in as a callback function.
