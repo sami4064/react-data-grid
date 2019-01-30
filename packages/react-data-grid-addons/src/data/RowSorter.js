@@ -1,6 +1,8 @@
 import {getMixedTypeValueRetriever, isImmutableCollection} from 'common/utils';
 
 const comparer = (a, b) => {
+  if(b===null) return 1;
+  if(a===null) return -1;
   if (a > b) {
     return 1;
   } else if (a < b) {
