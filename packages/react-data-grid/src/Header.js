@@ -97,6 +97,14 @@ class Header extends React.Component {
       const isSuperHeader = row.rowType === HeaderRowType.SUPER;
       if(isSuperHeader) {
         superColumns = row.columns;
+        const totalSpan = row.columns.reduce((s, v) => s + v.span, 0);
+        const incompleteSpan = columnMetrics.columns.length - totalSpan;
+        if(incompleteSpan > 0) {
+          superColumns.push({
+            key: 'unused-super-header-span',
+            span: incompleteSpan
+          });
+        }
         let superColIdx = 0;
         let left=0;
         let width=0;
