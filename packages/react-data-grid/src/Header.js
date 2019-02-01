@@ -207,6 +207,7 @@ class Header extends React.Component {
   };
 
   setScrollLeft = (scrollLeft) => {
+    if(!this.scrollRows) return;
     for(const row of this.scrollRows) {
       const node = ReactDOM.findDOMNode(row);
       node.scrollLeft = scrollLeft;
