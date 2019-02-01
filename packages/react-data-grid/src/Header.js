@@ -78,12 +78,16 @@ class Header extends React.Component {
     }
   };
 
+  addScrollRow = (row) => {
+    if(!this.scrollRows) this.scrollRows = [];
+    if(this.scrollRows) {
+      this.scrollRows.push(row);
+    }
+  }
+
   setRowRef = (row) => {
     this.row = row;
-  };
-
-  setFilterRowRef = (filterRow) => {
-    this.filterRow = filterRow;
+    this.addScrollRow(row);
   };
 
   getHeaderRows = () => {
@@ -95,6 +99,7 @@ class Header extends React.Component {
       // To allow header filters to be visible
       const isFilterRow = row.rowType === HeaderRowType.FILTER;
       const isSuperHeader = row.rowType === HeaderRowType.SUPER;
+      const isMasterHeader = !(isFilterRow || isSuperHeader);
       if(isSuperHeader) {
         superColumns = row.columns;
         const totalSpan = row.columns.reduce((s, v) => s + v.span, 0);
@@ -137,7 +142,7 @@ class Header extends React.Component {
       return (
         <HeaderRow
           key={row.rowType}
-          ref={isFilterRow ? this.setFilterRowRef : this.setRowRef}
+          ref={isMasterHeader ? this.setRowRef : this.addScrollRow}
           rowType={row.rowType}
           style={headerRowStyle}
           onColumnResize={this.onColumnResize}
@@ -202,13 +207,10 @@ class Header extends React.Component {
   };
 
   setScrollLeft = (scrollLeft) => {
-    let node = ReactDOM.findDOMNode(this.row);
-    node.scrollLeft = scrollLeft;
-    this.row.setScrollLeft(scrollLeft);
-    if (this.filterRow) {
-      let nodeFilters = ReactDOM.findDOMNode(this.filterRow);
-      nodeFilters.scrollLeft = scrollLeft;
-      this.filterRow.setScrollLeft(scrollLeft);
+    for(const row of this.scrollRows) {
+      const node = ReactDOM.findDOMNode(row);
+      node.scrollLeft = scrollLeft;
+      row.setScrollLeft(scrollLeft);
     }
   };
 
