@@ -11,7 +11,7 @@ const createObjectWithProperties = require('./createObjectWithProperties');
 const cellMetaDataShape    = require('common/prop-shapes/CellMetaDataShape');
 import { HeaderRowType } from 'common/constants';
 require('../../../themes/react-data-grid-header.css');
-
+import isMounted from 'common/utils/isMounted';
 
 // The list of the propTypes that we want to include in the Header div
 const knownDivPropertyKeys = ['height', 'onScroll'];
@@ -209,8 +209,11 @@ class Header extends React.Component {
   setScrollLeft = (scrollLeft) => {
     if(!this.scrollRows) return;
     for(const row of this.scrollRows) {
+      if(!isMounted(row)) continue;
       const node = ReactDOM.findDOMNode(row);
-      node.scrollLeft = scrollLeft;
+      if(node) {
+        node.scrollLeft = scrollLeft;
+      }
       row.setScrollLeft(scrollLeft);
     }
   };
