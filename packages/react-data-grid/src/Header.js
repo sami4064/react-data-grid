@@ -85,6 +85,10 @@ class Header extends React.Component {
     }
   }
 
+  clearScrollRows = () => {
+    this.scrollRows = [];
+  }
+
   setRowRef = (row) => {
     this.row = row;
     this.addScrollRow(row);
@@ -94,6 +98,7 @@ class Header extends React.Component {
     const columnMetrics = this.getColumnMetrics();
     const resizeColumn = this.state.resizing ? this.state.resizing.column : undefined;
     let superColumns = [];
+    this.clearScrollRows();
 
     return this.props.headerRows.map((row, index) => {
       // To allow header filters to be visible
@@ -210,7 +215,7 @@ class Header extends React.Component {
     if(!this.scrollRows) return;
     for(const row of this.scrollRows) {
       if(!isMounted(row)) continue;
-      const node = ReactDOM.findDOMNode(row);
+      const node = ReactDOM.findDOMNode(row); // bleurgh
       if(node) {
         node.scrollLeft = scrollLeft;
       }
