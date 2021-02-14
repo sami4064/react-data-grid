@@ -1,94 +1,134 @@
-# React Data Grid 
+# react-data-grid
 
-[logo]: https://user-images.githubusercontent.com/1432798/48616964-077b9400-e98d-11e8-9b56-f70e0722b83d.png "ReactDataGrid"
+[![npm-badge]][npm-url]
+[![type-badge]][npm-url]
+[![size-badge]][size-url]
+[![ci-badge]][ci-url]
 
-[![Build status](https://ci.appveyor.com/api/projects/status/smciktvlkvp6r8w7/branch/master?svg=true)](https://ci.appveyor.com/project/adazzle/react-data-grid/branch/master)
-[![Coverage Status](https://coveralls.io/repos/adazzle/react-data-grid/badge.svg?branch=master)](https://coveralls.io/r/adazzle/react-data-grid?branch=master)
-[![npm version](https://badge.fury.io/js/react-data-grid.svg)](http://badge.fury.io/js/react-data-grid) 
-![npm dependencies](https://david-dm.org/adazzle/react-data-grid.svg)
-[![CDNJS](https://img.shields.io/cdnjs/v/react-data-grid.svg)](https://cdnjs.com/libraries/react-data-grid)
+[npm-badge]: https://img.shields.io/npm/v/react-data-grid
+[npm-url]: https://www.npmjs.com/package/react-data-grid
+[size-badge]: https://img.shields.io/bundlephobia/minzip/react-data-grid
+[size-url]: https://bundlephobia.com/result?p=react-data-grid
+[type-badge]: https://img.shields.io/npm/types/react-data-grid
+[ci-badge]: https://github.com/adazzle/react-data-grid/workflows/CI/badge.svg
+[ci-url]: https://github.com/adazzle/react-data-grid/actions
 
-Excel-like grid component built with React, with editors, keyboard navigation, copy &amp; paste, and the like 
+## Install
 
-
-http://adazzle.github.io/react-data-grid/  
-![react-data-grid](https://cloud.githubusercontent.com/assets/1432798/7348812/78063bd6-ecec-11e4-89d5-ffd327721cd7.PNG)
-
-
-Overview 
---------
-ReactDataGrid is an advanced JavaScript spreadsheet-like grid component built using React
-
-Installation
-------------
-The easiest way to use react-data-grid is to install it from npm and build it into your app with Webpack.
 ```sh
 npm install react-data-grid
 ```
 
-You can then import react-data-grid in your application as follows:
-```typescript
-import ReactDataGrid from 'react-data-grid';
-```
+react-data-grid is published as ES2019 modules, you'll probably want to transpile those down to scripts for the browsers you target using [Babel](https://babeljs.io/) and [browserslist](https://github.com/browserslist/browserslist).
 
-Versions In This Repository
---------
-
-- [master](https://github.com/adazzle/react-data-grid/commits/master) - commits that will be included in the next _minor_ or _patch_ release
-- [next](https://github.com/adazzle/react-data-grid/commits/next) - commits that will be included in the next _major_ release (breaking changes)
-
-Most PRs should be made to **master**, unless you know it is a breaking change.
-
-To install the latest **unstable** version, you can run 
-```sh
-npm install react-data-grid@next
-```
-
-Themes
-------
-We use [Bootstrap](https://github.com/twbs/bootstrap). If you want your Grid to get the "default" styling like the picture above, you'll need to include it separately.
+<details>
+<summary>Example browserslist configuration file</summary>
 
 ```
-npm install bootstrap
+last 2 chrome versions
+last 2 edge versions
+last 2 firefox versions
+last 2 safari versions
 ```
-and then import the css from the dist folder when bootstrapping your application
+
+See [documentation](https://github.com/browserslist/browserslist)
+</details>
+
+<details>
+<summary>Example babel.config.json file</summary>
+
+```json
+{
+  "presets": [
+    ["@babel/env", {
+      "bugfixes": true,
+      "shippedProposals": true,
+      "corejs": 3,
+      "useBuiltIns": "entry"
+    }]
+  ]
+}
 ```
-import 'bootstrap/dist/css/bootstrap.css';
+
+See [documentation](https://babeljs.io/docs/en/)
+
+- It's important that the configuration filename be `babel.config.*` instead of `.babelrc.*`, otherwise Babel might not transpile modules under `node_modules`.
+- We recommend polyfilling modern JS features with [core-js](https://www.npmjs.com/package/core-js) by adding the following snippet at the top of your bundle's entry file:
+  ```js
+  import 'core-js/stable';
+  ```
+  - Babel's `env` preset, if configured correctly, will transform this import so only the necessary polyfills are included in your bundle.
+- Polyfilling the [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) API is required for older browsers.
+</details>
+
+<details>
+<summary>Webpack configuration with babel-loader</summary>
+
+```js
+{
+  // ...
+  module: {
+    rules: {
+      test: /\.js$/,
+      exclude: /node_modules[/\\](?!react-data-grid[/\\]lib)/,
+      use: 'babel-loader'
+    }
+  }
+}
 ```
 
-Migrations
---------
-If you intend to do a major release update for you react-data-grid check [the migration documents](migrations).
-  
-Features
---------
+See [documentation](https://github.com/babel/babel-loader)
+</details>
 
-- Lightning fast virtual rendering
-- [Can render hundreds of thousands of rows with no lag](http://adazzle.github.io/react-data-grid/#/examples/one-million-rows)
-- Keyboard navigation
-- [Fully editable grid](http://adazzle.github.io/react-data-grid/#/examples/editable)
-- [Rich cell editors like autocomplete, checkbox and dropdown editors, complete with keyboard navigation](http://adazzle.github.io/react-data-grid/#/examples/built-in-editors)
-- Custom cell Editors - Easily create your own
-- [Custom cell Formatters](http://adazzle.github.io/react-data-grid/#/examples/custom-formatters)
-- [Frozen columns](http://adazzle.github.io/react-data-grid/#/examples/frozen-cols)
-- [Resizable columns](http://adazzle.github.io/react-data-grid/#/examples/resizable-cols)
-- [Sorting](http://adazzle.github.io/react-data-grid/#/examples/sortable-cols) 
-- [Filtering](http://adazzle.github.io/react-data-grid/#/examples/filterable-sortable-grid) 
-- [Context Menu](http://adazzle.github.io/react-data-grid/#/examples/context-menu)
-- Copy and Paste values into other cells
-- [Multiple cell updates using cell dragdown](http://adazzle.github.io/react-data-grid/#/examples/cell-drag-down)
-- [Association of events of individual columns](http://adazzle.github.io/react-data-grid/#/examples/column-events)
+<details>
+<summary>rollup.js configuration with @rollup/plugin-babel</summary>
 
+```js
+{
+  // ...
+  plugins: {
+    babel({
+      include: [
+        './src/**/*',
+        './node_modules/react-data-grid/lib/**/*'
+      ]
+    })
+  }
+}
+```
 
-Check out the `examples` directory to see how simple previously complex UI
-and workflows are to create.
+See [documentation](https://github.com/rollup/plugins/tree/master/packages/babel)
+</details>
 
+## Usage
 
-Contributing
-------------
+```jsx
+import DataGrid from 'react-data-grid';
 
-Please see [CONTRIBUTING](CONTRIBUTING.md)
+const columns = [
+  { key: 'id', name: 'ID' },
+  { key: 'title', name: 'Title' }
+];
 
-Credits 
-------------
-This project has been built upon the great work done by [Prometheus Research](https://github.com/prometheusresearch). For the original project, please click [here]( https://github.com/prometheusresearch/react-grid). It is released under [MIT](https://github.com/adazzle/react-data-grid/blob/master/LICENSE)
+const rows = [
+  { id: 0, title: 'Example' },
+  { id: 1, title: 'Demo' }
+];
+
+function App() {
+  return (
+    <DataGrid
+      columns={columns}
+      rows={rows}
+    />
+  );
+}
+```
+
+## Documentation
+
+- [Website](https://adazzle.github.io/react-data-grid/canary/)
+  - [Source code](stories)
+- [Old website for react-data-grid v5](https://adazzle.github.io/react-data-grid/)
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
